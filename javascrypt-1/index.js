@@ -3,11 +3,11 @@ let numbers = []
 
 let sum = (firstNum) => {
 
-    numbers.push(firstNum)
+    numbers.push(firstNum) //пушим первое число в массив
 
     let addNum = (nextNum) => {
 
-        if (nextNum === undefined) {
+        if (nextNum === undefined) { //если число undefined, то проходимся циклом for of по массиву чисел, складывая их
 
             let mumbersSum = 0;
 
@@ -19,7 +19,8 @@ let sum = (firstNum) => {
 
         }
 
-        numbers.push(nextNum)
+        numbers.push(nextNum) //пушим последующее число в массив
+
 
         return addNum;
 
