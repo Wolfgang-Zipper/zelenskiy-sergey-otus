@@ -1,51 +1,32 @@
-let shopList = [
-    ["q", "w", 'a'],
-    ["a", "b"],
-    ["a", "c"],
-    ["q", "e"],
-    ["q", "r"],
-]
-
-let association = {};
-let associationMax = [];
-
-function maxItemAssociation(shop) {
-
-    shop.forEach(products => { //перебираем список покупок
-
-        products.forEach(productsItem => { //перебираем покупку
-
-            if (association.hasOwnProperty(productsItem)) { // подсчитываем количество повторений товара, тем самым получаем товар, встречающийся в максимальных рекоментациях
-                association[productsItem] += 1
-            } else {
-                association[productsItem] = 1
-                
-            }
-
-        });
-    });
-
-    for (let item of Object.keys(association)) { //перебираем обьект товаров с количеством
-
-        if (association[item] >= 2) { // если количество всетрается 2 раза и больше, то
-
-            shop.forEach(products => { //перебираем список покупок
-
-                products.forEach(productsItem => { //перебираем покупку
-
-                    if (products.some(e => e == item) && !associationMax.includes(productsItem)) {
-
-                        associationMax.push(productsItem) // если покупка содержит товар, встречающийся в максимальных рекоментациях, добавляем в обьект 
-
-                    }
-                });
-
-            });
-
-        }
-    }
-
-    return associationMax.sort(); // сортируем
+var fn1 = () => {
+  console.log('fn1')
+  return Promise.resolve(1)
 }
 
-console.log(maxItemAssociation(shopList)) // ['a', 'b', 'c', 'e', 'q', 'r', 'w']
+var fn2 = () => new Promise(resolve => {
+  console.log('fn2')
+
+  setTimeout(() => resolve(2), 1000)
+})
+
+async function promiseReduce (asyncFunctions, reduce, initialValue) {
+  let result = 0; 
+  for (func of asyncFunctions) { //перебираем массив функций, forEach не подошел, так как не возвращает промисы
+      await func().then(res => { //ждем выпонления функции в цикле, после выполнения (.then), значение, возвращаемое функциями в массиве, обрабатываем в функции reduce и назначем переменной result, которую отдает promiseReduce
+        result = reduce(res, initialValue)
+      })
+  }
+
+  return result
+
+}
+
+promiseReduce([fn1, fn2],
+  function (memo, value) {
+      console.log('reduce')
+
+      return memo * value
+  },
+  1
+)
+  .then(console.log)
