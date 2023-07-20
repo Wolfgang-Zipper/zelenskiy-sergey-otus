@@ -18,7 +18,7 @@ async function promiseReduce (asyncFunctions, reduce, initialValue) {
       })
   }
 
-  return result
+  return Promise.resolve(result) //возвращаем промис
 
 }
 
