@@ -1,18 +1,40 @@
-function getElementById(node, id) {    
-    return node.querySelector("#" + id);
-}
 
-function foo(html) {
-    var el = document.createElement("div");
+const getPath = (element) => {
 
-    el.innerHTML = html;
+try {
 
-    var target = getElementById(el, "target");
+    let selectors = `#${element.id}`; // querySelectorAll имеет возможность поиска по id элемента, указываем его в начале
 
-    /* Do something with `target` */
-    if (target) {
-        console.log(target);
+    while (element) { // присваиваем в element родительский элемент, добавляем его тег в начало строки, пока не дойдем до BODY
+        
+        element = element.parentNode;
+        if (element.tagName) {
+            selectors = `${element.tagName}>` + selectors
+         }
+        if (element && element.tagName == "BODY") {
+
+    
+            return selectors.toLowerCase()
+
+
+           }
+             
+    
     }
-}
 
-foo('<div id="nottarget1"><div id="nottarget2"><div id="nottarget3"><div id="nottarget4"><div id="target">Target</div></div></div></div></div>');
+}  catch (e)  {
+    return `${e.message}`  //отдаем сообщеине об ошибке в виде текста 
+ 
+}
+}  
+    
+
+module.exports = { getPath };
+
+
+
+
+
+
+
+
