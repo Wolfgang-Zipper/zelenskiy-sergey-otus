@@ -1,6 +1,6 @@
 var fn1 = () => {
   console.log('fn1')
-  return Promise.resolve(5) //добавлено 5 для проверки
+  return Promise.resolve(3) //добавлено 3 для проверки
 }
 
 var fn2 = () => new Promise(resolve => {
@@ -10,13 +10,13 @@ var fn2 = () => new Promise(resolve => {
 })
 
 async function promiseReduce (asyncFunctions, reduce, initialValue) {
-  let result = 0; 
+  let result = initialValue || 0; 
   for (func of asyncFunctions) { //перебираем массив функций, forEach не подошел, так как не возвращает промисы
       await func().then(res => { //ждем выпонления функции в цикле, после выполнения (.then), значение, возвращаемое функциями в массиве, обрабатываем в функции reduce и назначем переменной result, которую отдает promiseReduce
-        result += reduce(res, initialValue) //прибавляем каждый результат reduce к result
-
+        result = reduce(res, result)
       })
   }
+
 
   return Promise.resolve(result) //возвращаем промис
 
@@ -25,8 +25,6 @@ async function promiseReduce (asyncFunctions, reduce, initialValue) {
 promiseReduce([fn1, fn2],
   function (memo, value) {
       console.log('reduce') 
-      console.log(memo * value) //лог для проверки вызхова функции для каждого успешно завершившегося промиса
-
       return memo * value
   },
   1
