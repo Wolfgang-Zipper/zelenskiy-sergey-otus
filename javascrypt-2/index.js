@@ -17,8 +17,9 @@ async function promiseReduce (asyncFunctions, reduce, initialValue) {
       })
   }
 
-   
-  return Promise.resolve(result)
+
+  return Promise.resolve(result) //возвращаем промис
+
 }
 
 promiseReduce([fn1, fn2],
