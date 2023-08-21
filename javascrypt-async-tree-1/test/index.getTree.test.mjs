@@ -1,14 +1,42 @@
 import getTree from "../index.mjs";
 import assert from "assert";
+import mockFs from "mock-fs";
+const dir = './directory-two/';
+
+mockFs({
+  './directory-two/': {
+    'directory-one': {
+      '1.js': '',
+      '2.js': '',
+      '3.js': '',
+      '4.js': '',
+      'test-directory-1': {
+        '10.js': '',
+        '11.js': '',
+        '12.js': '',
+        '9.js': ''
+      },
+      'test-directory-1.s': {
+        '5.js': '',
+        '6.js': '',
+        '7.js': '',
+        '8.js': ''
+      }
+    }
+  }
+});
+
 
 describe("getTree", () => {
-  let dir = "./directory-two/";
   let result;
 
   beforeEach(async () => {
     result = {}; // обнуляем переменную tree перед каждым тестом
-
     result = await getTree(dir);
+  });
+
+  afterEach(() => {
+    mockFs.restore();
   });
 
   it("отдает количество файлов = 12 ", function () {
