@@ -1,0 +1,23 @@
+{
+  "name": "streams-api",
+  "version": "1.0.0",
+  "description": "counting words in a file",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "Sergey",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^4.4.1",
+    "eslint": "^8.46.0",
+    "mocha": "^10.2.0",
+    "prettier": "^3.0.1"
+  },
+  "dependencies": {
+    "events": "^3.3.0",
+    "stream": "^0.0.2"
+  }
+}
+git config --global user.email "sergzelenscky@yandex.ru"
+git config --global user.name "Wolfgang-Zipper"
