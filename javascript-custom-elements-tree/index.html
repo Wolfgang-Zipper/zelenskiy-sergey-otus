@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Отображение файловой системы</title>
+<link rel="stylesheet" href="./main.css">
+</head>
+<body>
+
+<my-tree id="root-tree"></my-tree>
+
+<script src="tree.js"></script>
+<script>
+
+const treeRoot = document.querySelector('#root-tree');
+
+// Передаю данные в элемент дерева
+treeRoot.treeData = [
+  {
+    './directory-two/': {
+      'directory-one': {
+        '1.js': '',
+        '2.js': '',
+        '3.js': '',
+        '4.js': '',
+        'test-directory1-1': {
+          '10.js': '',
+          '11.js': '',
+          '12.js': '',
+          '9.js': ''
+        },
+        'test-directory-1.s': {
+          '5.js': '',
+          '6.js': '',
+          '7.js': '',
+          '8.js': ''
+        }
+      }
+    }
+  }
+];
+
+</script>
+
+</body>
+</html>
