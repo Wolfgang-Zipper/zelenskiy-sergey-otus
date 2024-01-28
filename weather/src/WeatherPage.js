@@ -14,8 +14,8 @@ const WeatherPage = () => {
 
         // ассинхронная функция для получения данных о погоде
         const fetchWeather = async () => {
-            const apiKey = '799f845d2e3a43ed40eadc093c222607'
-            const url = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=metric&appid=${apiKey}`
+            const ow_apiKey = process.env.REACT_APP_OW_API
+            const url = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=metric&appid=${ow_apiKey}`
 
             try {
                 // Отправка запроса к API
