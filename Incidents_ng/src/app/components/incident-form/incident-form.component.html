@@ -1,0 +1,185 @@
+<div class="container h-100">
+  <div class="row h-100 justify-content-center align-items-center">
+    <div class="align-items-center d-flex flex-column">
+      <div [className]="'incident-form__truble-check'">
+        <div class="col-auto">
+          <label class="col-form-label">Проблема с</label>
+        </div>
+        <select
+          class="form-control incident-form__truble-drop"
+          (change)="gatewayIssueChange($event)"
+          [(ngModel)]="selectedIncident"
+        >
+          <option value="" disabled selected>выберите вариант</option>
+          <option value="oneGateway">одним шлюзом</option>
+          <option value="allGateway">всеми шлюзами</option>
+          <option value="infrastructure">
+            нашей инфраструктурой или банка
+          </option>
+          <option value="cloudLk">доступностью ЛК</option>
+        </select>
+      </div>
+      <form
+        [formGroup]="incidentsForm"
+        class="incident-form__form"
+        #parentForm="ngForm"
+      >
+        <div [ngSwitch]="selectedIncident" [className]="'card-body'">
+          <div
+            *ngSwitchCase="'oneGateway'"
+            class="incident-form__template g-2 align-items-center"
+          >
+            <span>Наблюдаем кратковременные задержки по шлюзу</span>
+
+            <input
+              formControlName="bankNameError"
+              class="incident-form__input"
+              autocomplete="off"
+              role="combobox"
+              list="gateway"
+              id="input-gateway"
+              name="gateway"
+              placeholder="введите шлюз"
+            />
+
+            <datalist id="gateway" role="listbox">
+              <option *ngFor="let bank of banks" [value]="bank">
+                {{ bank }}
+              </option></datalist
+            >.
+
+            <span>Мерчанты могут получать коды ошибок</span>
+
+            <input
+              formControlName="bankCodeError"
+              matInput
+              class="incident-form__input"
+              placeholder="введите ошибки"
+            />.
+
+            <span
+              >Вероятно причина на стороне банка. С поддержкой связались.
+              Сообщим дополнительно. Началось с</span
+            >
+
+            <input
+              formControlName="dateTime"
+              class="incident-form__input"
+              type="datetime-local"
+            />.
+          </div>
+
+          <div
+            *ngSwitchCase="'allGateway'"
+            class="incident-form__template g-2 align-items-center"
+          >
+            <span>Наблюдаем массовые отклонения платежей по всем шлюзам с</span>
+
+            <input
+              formControlName="dateTime"
+              class="incident-form__input"
+              type="datetime-local"
+            />.
+
+            <span>Мерчанты могут получать коды ошибок</span>
+
+            <input
+              formControlName="bankCodeError"
+              matInput
+              class="incident-form__input"
+              placeholder="введите ошибки"
+            />.
+
+            <span>С причинами разбираемся. Сообщим дополнительно.</span>
+          </div>
+
+          <div
+            *ngSwitchCase="'infrastructure'"
+            class="incident-form__template g-2 align-items-center"
+          >
+            <span
+              >Наблюдаем таумАуты (или увеличенное время ответов на наши запросы
+              со стороны банка) от нашего API</span
+            >
+
+            <input
+              formControlName="bankTruble"
+              class="incident-form__input"
+              placeholder="укажите где проблема"
+            />.
+
+            <span
+              >Запросы в API со стороны мерчантов могут отваливаться по
+              ТаймАуту. С причинами разбираемся. Сообщим дополнительно.</span
+            >
+          </div>
+
+          <div
+            *ngSwitchCase="'cloudLk'"
+            class="incident-form__template g-2 align-items-center"
+          >
+            <span>Наблюдаем недоступность</span>
+
+            <input
+              formControlName="lkType"
+              class="incident-form__input"
+              autocomplete="off"
+              role="combobox"
+              list="lk"
+              name="lk"
+              placeholder="выберите лк или напишите свое"
+            />
+
+            <datalist id="lk" role="listbox">
+              <option value="всех лк">всех лк</option>
+              <option value="личного кабинета менеджера">
+                личного кабинета менеджера
+              </option>
+              <option value="личного кабинета мерчанта">
+                личного кабинета мерчанта
+              </option>
+              <option value="личного кабинета Cloudtips">
+                личного кабинета Cloudtips
+              </option></datalist
+            >.
+
+            <span>При входе возникает ошибка</span>
+
+            <input
+              formControlName="bankCodeError"
+              matInput
+              class="incident-form__input"
+              type="errors"
+              placeholder="введите ошибки"
+            />.
+
+            <span>С причинами разбираемся. Сообщим дополнительно.</span>
+          </div>
+        </div>
+
+        <dropdown-send
+          [className]="'incident-form__buttonsend'"
+          *ngIf="selectedIncident"
+          [bankCodeError]="bankCodeError"
+          [dateTime]="dateTime"
+          [selectedIncident]="selectedIncident"
+          [bankNameError]="bankNameError"
+          [lkType]="lkType"
+          [bankTruble]="bankTruble"
+          (submitEvent)="parentForm.onSubmit($event)"
+          [incidentsForm]="incidentsForm"
+        ></dropdown-send>
+      </form>
+      <div
+        *ngIf="
+          incidentsForm.controls.bankNameError.invalid &&
+          incidentsForm.controls.bankNameError.touched
+        "
+      >
+        Это поле обязательно для заполнения
+      </div>
+    </div>
+  </div>
+</div>
+
+<user-manager></user-manager>
