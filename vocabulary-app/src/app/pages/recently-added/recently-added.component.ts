@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Injectable } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
@@ -6,7 +6,10 @@ import {
   WordEntry,
 } from '../../services/dictionary-storage.service';
 import { SettingsService } from '../../services/settings-service.service';
-
+import { TranslateService } from '../../services/translate.service';
+@Injectable({
+  providedIn: 'root',
+})
 @Component({
   selector: 'app-recently-added',
   templateUrl: './recently-added.component.html',
@@ -22,13 +25,23 @@ export class RecentlyAddedComponent {
 
   constructor(
     private storageService: DictionaryStorageService,
-    private settingsService: SettingsService
+    private settingsService: SettingsService,
+    private TranslateService: TranslateService
   ) {
+    this.performTranslation();
     this.recentlyAddedWords = this.storageService.getWords();
     this.settings =
       this.settingsService.getSettings() || this.getDefaultSettings(); // была ошибка при первом открытии, когда языков нету, добавил дефолтные данные
-    console.log(this.settings);
-    console.log(this.recentlyAddedWords);
+  }
+  performTranslation() {
+    this.TranslateService.translateText('Пример текста', 'ru', 'en').subscribe({
+      next: (response) => {
+        console.log(response);
+      },
+      error: (error) => {
+        // Обработка ошибок
+      },
+    });
   }
   getSettings(): void {
     this.settingsService.getSettings();

@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, Injectable } from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
 import { SettingsService } from '../../services/settings-service.service';
-
+@Injectable({
+  providedIn: 'root',
+})
 @Component({
   selector: 'app-settings',
   standalone: true,
