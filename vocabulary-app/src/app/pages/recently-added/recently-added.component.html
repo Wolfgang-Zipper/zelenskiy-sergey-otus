@@ -1,0 +1,34 @@
+<h1>
+  Перевод слов с {{ settings.languageFrom }} на
+  {{ settings.languageTo }}
+</h1>
+<form (ngSubmit)="addWord()">
+  <input
+    type="text"
+    [(ngModel)]="newWord"
+    name="word"
+    placeholder="Word"
+    required
+  />
+  <input
+    type="text"
+    [(ngModel)]="newTranslation"
+    name="translation"
+    placeholder="Translation"
+    required
+  />
+  <button type="submit">Добавить</button>
+</form>
+
+<ul>
+  <ng-container *ngFor="let wordEntry of recentlyAddedWords">
+    <li
+      *ngIf="
+        wordEntry.settingsFromLang == settings.languageFrom &&
+        wordEntry.settingsToLang == settings.languageTo
+      "
+    >
+      {{ wordEntry.word }} - {{ wordEntry.translation }}
+    </li>
+  </ng-container>
+</ul>

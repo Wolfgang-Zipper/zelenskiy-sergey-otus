@@ -1,0 +1,26 @@
+<div>
+  <h2>Настройки перевода</h2>
+  <form [formGroup]="settingsForm" (ngSubmit)="saveSettings()">
+    <label for="languageFrom"> С </label>
+    <select id="languageFrom" formControlName="languageFrom">
+      <option value="English">English</option>
+      <option value="Spanish">Spanish</option>
+      <option value="Russian">Русский</option>
+    </select>
+
+    <label for="languageTo"> на </label>
+    <select id="languageTo" formControlName="languageTo">
+      <option value="Russian">Русский</option>
+      <option value="Spanish">Spanish</option>
+      <option value="English">English</option>
+    </select>
+
+    <label for="wordsAmount">Количество слов:</label>
+    <input type="number" id="wordsAmount" formControlName="wordsAmount" />
+
+    <label for="exerciseTime">Время выполнения в минутах:</label>
+    <input type="number" id="exerciseTime" formControlName="exerciseTime" />
+
+    <button type="submit">Сохранить</button>
+  </form>
+</div>
