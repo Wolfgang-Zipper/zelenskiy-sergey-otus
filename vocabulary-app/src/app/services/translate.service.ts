@@ -1,14 +1,9 @@
-import { Component, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
-})
-@Component({
-  // ...
-  standalone: true,
-  providers: [TranslateService, HttpClient], // HttpClient добавлен в providers
 })
 export class TranslateService {
   private apiUrl: string =
@@ -29,7 +24,7 @@ export class TranslateService {
 
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      Authorization: 'Api-Key ................',
+      Authorization: 'Api-Key ..............',
     });
 
     return this.http.post(this.apiUrl, body, { headers });

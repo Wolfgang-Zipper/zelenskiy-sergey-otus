@@ -36,11 +36,9 @@ export class RecentlyAddedComponent {
   performTranslation() {
     this.TranslateService.translateText('Пример текста', 'ru', 'en').subscribe({
       next: (response) => {
-        console.log(response);
+        console.log(response); // пока вывод в консоль для теста
       },
-      error: (error) => {
-        // Обработка ошибок
-      },
+      error: (error) => {},
     });
   }
   getSettings(): void {

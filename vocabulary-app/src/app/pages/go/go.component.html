@@ -1,4 +1,9 @@
 <div *ngIf="currentWord; else other_content">
+  <h1>
+    Перевод слов с {{ settings.languageFrom }} на
+    {{ settings.languageTo }}
+  </h1>
+
   <p>Translate the word: {{ currentWord }}</p>
   <form (ngSubmit)="checkTranslation()">
     <input
@@ -19,6 +24,11 @@
 </div>
 
 <ng-template #other_content>
+  <h1>
+    Перевод слов с {{ settings.languageFrom }} на
+    {{ settings.languageTo }}
+  </h1>
+
   <h3 style="color: red">Для выбранных языков нет слов</h3>
   <h6 style="color: red">Добавьте слово или смените языки в настройках</h6>
 </ng-template>
